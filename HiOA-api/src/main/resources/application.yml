@@ -1,0 +1,105 @@
+server:
+  jetty:
+    threads:
+      acceptors: 4
+      selectors: 8
+  port: 8090
+  servlet:
+    context-path: /hioa-api
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 2MB
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/hioa?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+      username: root
+      password: abc123456
+      initial-size: 2
+      max-active: 4
+      min-idle: 4
+      max-wait: 60000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: abc123456
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 16
+        min-idle: 8
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: hioa
+      authentication-database: admin
+      username: admin
+      password: abc123456
+      
+sa-token:
+  # token name (also cookie name)
+  token-name: token
+  # Token expiration time, unit in seconds, default is 30 days. -1 represents never expires.
+  timeout: 2592000
+  # Temporary token validity period (Token will be considered expired if there is no activity within the specified time). Unit: seconds.
+  activity-timeout: -1
+  # 并发登录 Allow concurrent logins with the same account (set to true to allow simultaneous logins, set to false to force new login to replace old login).
+  allow-concurrent-login: true
+  # 是否多人公用一个token Whether multiple people share a token
+  is-share: false
+  # Disable reading Token in Cookie.
+  isReadCookie: true
+  token-style: uuid
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.example.hioa.wx.db.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    com.example.hioa.wx.db.dao: warn
+  pattern:
+    console: "%d{yyyy/MM/dd HH:mm:ss}  %-5level  %msg%n"
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /doc-api.html
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: on
+tencent:
+  cloud:
+    appId: *yourappID*
+    secretId: *yourSecretID*
+    secretKey: *yourSecretKey*
+    region: ap-hongkong
+    bucket: hioa-********
+  trtc:
+    appId: *yourappID*
+    secretKey: *yourSecretKey*
+    expire: 86400
+wx:
+  app-id: *yourappID*
+  app-secret: *yourappsecret*
+  mch-id: *mch-id*
+  key: *yourkey*
+  cert-path: D:/apiclient_cert.p12
+hioa:
+  recieveNotify: http://localhost:8090/hioa-api/meeting/recieveNotify
+
+workflow:
+  url: http://localhost:9090/hioa-workflow
