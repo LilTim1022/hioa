@@ -6,9 +6,9 @@
 			</el-form-item>
 			<el-form-item prop="type">
 				<el-select v-model="dataForm.type" placeholder="Type" size="medium" clearable="clearable">
-					<el-option label="会议申请" value="会议申请"></el-option>
-					<el-option label="员工请假" value="员工请假"></el-option>
-					<el-option label="报销申请" value="报销申请"></el-option>
+					<el-option label="Meeting Approval" value="会议申请"></el-option>
+					<el-option label="Leave Approval" value="员工请假"></el-option>
+					<el-option label="Reimbursement Approval" value="报销申请"></el-option>
 				</el-select>
 			</el-form-item>
 			<el-form-item prop="instanceId">

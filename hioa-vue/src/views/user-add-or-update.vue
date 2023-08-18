@@ -1,38 +1,38 @@
 <template>
 	<el-dialog
-		:title="!dataForm.id ? '新增' : '修改'"
+		:title="!dataForm.id ? 'Add' : 'Modify'"
 		v-if="isAuth(['ROOT', 'USER:INSERT', 'USER:UPDATE'])"
 		:close-on-click-modal="false"
 		v-model="visible"
 		width="450px"
 	>
 		<el-form :model="dataForm" ref="dataForm" :rules="dataRule" label-width="80px">
-			<el-form-item label="用户名" prop="username">
+			<el-form-item label="username" prop="username">
 				<el-input v-model="dataForm.username" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="密码" prop="password">
+			<el-form-item label="password" prop="password">
 				<el-input type="password" v-model="dataForm.password" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="姓名" prop="name">
+			<el-form-item label="name" prop="name">
 				<el-input v-model="dataForm.name" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="性别" prop="sex">
+			<el-form-item label="sex" prop="sex">
 				<el-select v-model="dataForm.sex" size="medium" style="width: 100%;" clearable>
-					<el-option label="男" value="男"></el-option>
-					<el-option label="女" value="女"></el-option>
+					<el-option label="Male" value="男"></el-option>
+					<el-option label="Female" value="女"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="电话" prop="tel">
+			<el-form-item label="tel" prop="tel">
 				<el-input v-model="dataForm.tel" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="邮箱" prop="email">
+			<el-form-item label="email" prop="email">
 				<el-input v-model="dataForm.email" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="入职日期" prop="hiredate">
+			<el-form-item label="hiredate" prop="hiredate">
 				<el-date-picker
 					v-model="dataForm.hiredate"
 					type="date"
-					placeholder="选择日期"
+					placeholder="Choose Date"
 					size="medium"
 					:editable="false"
 					format="YYYY-MM-DD"
@@ -40,11 +40,11 @@
 					style="width: 100%;"
 				/>
 			</el-form-item>
-			<el-form-item label="角色" prop="role">
+			<el-form-item label="role" prop="role">
 				<el-select
 					v-model="dataForm.role"
 					size="medium"
-					placeholder="选择角色"
+					placeholder="Choose Role"
 					style="width: 100%;"
 					multiple
 					clearable
@@ -58,11 +58,11 @@
 					></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="部门" prop="deptId">
+			<el-form-item label="deptId" prop="deptId">
 				<el-select
 					v-model="dataForm.deptId"
 					size="medium"
-					placeholder="选择部门"
+					placeholder="Choose Dept"
 					style="width: 100%;"
 					clearable
 				>
@@ -72,8 +72,8 @@
 		</el-form>
 		<template #footer>
 			<span class="dialog-footer">
-				<el-button size="medium" @click="visible = false">取消</el-button>
-				<el-button type="primary" size="medium" @click="dataFormSubmit">确定</el-button>
+				<el-button size="medium" @click="visible = false">Cancel</el-button>
+				<el-button type="primary" size="medium" @click="dataFormSubmit">Confirm</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -101,22 +101,22 @@ export default {
 			roleList: [],
 			deptList: [],
 			dataRule: {
-				username: [{ required: true, pattern: '^[a-zA-Z0-9]{5,20}$', message: '用户名格式错误' }],
-				password: [{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: '密码格式错误' }],
-				name: [{ required: true, pattern: '^[\u4e00-\u9fa5]{2,10}$', message: '姓名格式错误' }],
-				sex: [{ required: true, message: '性别不能为空' }],
-				tel: [{ required: true, pattern: '^1\\d{10}$', message: '电话格式错误' }],
+				username: [{ required: true, pattern: '^[a-zA-Z0-9]{5,20}$', message: 'username format error' }],
+				password: [{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: 'wrong password format' }],
+				name: [{ required: true, pattern: '^[\u4e00-\u9fa5]{2,10}$', message: 'wrong name format' }],
+				sex: [{ required: true, message: 'Gender cannot be empty' }],
+				tel: [{ required: true, pattern: '^1\\d{10}$', message: 'phone format error' }],
 				email: [
 					{
 						required: true,
 						pattern: '^([a-zA-Z]|[0-9])(\\w|\\-)+@[a-zA-Z0-9]+\\.([a-zA-Z]{2,4})$',
-						message: '邮箱格式错误'
+						message: 'E-mail format error'
 					}
 				],
-				hiredate: [{ required: true, trigger: 'blur', message: '入职日期不能为空' }],
-				role: [{ required: true, message: '角色不能为空' }],
-				deptId: [{ required: true, message: '部门不能为空' }],
-				status: [{ required: true, message: '状态不能为空' }]
+				hiredate: [{ required: true, trigger: 'blur', message: 'Entry date cannot be empty' }],
+				role: [{ required: true, message: 'role cannot be empty' }],
+				deptId: [{ required: true, message: 'Department cannot be empty' }],
+				status: [{ required: true, message: 'status cannot be empty' }]
 			}
 		};
 	},
@@ -173,7 +173,7 @@ export default {
 		            that.$http(`user/${!that.dataForm.id ? 'insert' : 'update'}`, 'POST', data, true, resp => {
 		                if (resp.rows == 1) {
 		                    that.$message({
-		                        message: '操作成功',
+		                        message: 'success',
 		                        type: 'success',
 		                        duration: 1200
 		                    });
@@ -181,7 +181,7 @@ export default {
 		                    that.$emit('refreshDataList');
 		                } else {
 		                    that.$message({
-		                        message: '操作失败',
+		                        message: 'error',
 		                        type: 'error',
 		                        duration: 1200
 		                    });

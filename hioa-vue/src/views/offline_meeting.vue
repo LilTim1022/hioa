@@ -5,7 +5,7 @@
 				<el-select
 					v-model="dataForm.name"
 					class="input"
-					placeholder="选择会议室"
+					placeholder="Select meeting room"
 					size="medium"
 					clearable="clearable"
 				>
@@ -16,14 +16,14 @@
 				<el-date-picker
 					v-model="dataForm.date"
 					type="date"
-					placeholder="选择日期"
+					placeholder="select date"
 					class="input"
 					size="medium"
 				></el-date-picker>
 			</el-form-item>
 			<el-form-item>
-				<el-button size="medium" type="primary" @click="searchHandle()">查询</el-button>
-				<el-button size="medium" type="danger" @click="addHandle()">会议申请</el-button>
+				<el-button size="medium" type="primary" @click="searchHandle()">Search</el-button>
+				<el-button size="medium" type="danger" @click="addHandle()">Apply Meeting</el-button>
 			</el-form-item>
 			<el-form-item class="mold">
 				<el-radio-group v-model="dataForm.mold" size="medium" @change="changeHandle">

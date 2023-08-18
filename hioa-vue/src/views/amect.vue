@@ -4,7 +4,7 @@
 			<el-form-item prop="name">
 				<el-input
 					v-model="dataForm.name"
-					placeholder="姓名"
+					placeholder="Name"
 					size="medium"
 					class="input"
 					clearable="clearable"
@@ -14,7 +14,7 @@
 				<el-select
 					v-model="dataForm.deptId"
 					class="input"
-					placeholder="部门"
+					placeholder="Department"
 					size="medium"
 					clearable="clearable"
 				>
@@ -25,7 +25,7 @@
 				<el-select
 					v-model="dataForm.typeId"
 					class="input"
-					placeholder="罚款类型"
+					placeholder="Fine Type"
 					size="medium"
 					clearable="clearable"
 				>
@@ -37,8 +37,8 @@
 					v-model="dataForm.date"
 					type="daterange"
 					range-separator="~"
-					start-placeholder="开始日期"
-					end-placeholder="结束日期"
+					start-placeholder="Start Date"
+					end-placeholder="End Date"
 					size="medium"
 				></el-date-picker>
 			</el-form-item>
@@ -46,23 +46,23 @@
 				<el-select
 					v-model="dataForm.status"
 					class="input"
-					placeholder="状态"
+					placeholder="Status"
 					size="medium"
 					clearable="clearable"
 				>
-					<el-option label="未缴纳" value="1" />
-					<el-option label="已缴纳" value="2" />
+					<el-option label="Not Paid" value="1" />
+					<el-option label="Paid" value="2" />
 				</el-select>
 			</el-form-item>
 			<el-form-item>
-				<el-button size="medium" type="primary" @click="searchHandle()">查询</el-button>
+				<el-button size="medium" type="primary" @click="searchHandle()">Search</el-button>
 				<el-button
 					size="medium"
 					type="primary"
 					:disabled="!isAuth(['ROOT', 'AMECT:INSERT'])"
 					@click="addHandle()"
 				>
-					新增
+					Add
 				</el-button>
 				<el-button
 					size="medium"
@@ -70,7 +70,7 @@
 					:disabled="!isAuth(['ROOT', 'AMECT:DELETE'])"
 					@click="deleteHandle()"
 				>
-					批量删除
+					Multi-Delete
 				</el-button>
 				<el-button
 					size="medium"
@@ -78,7 +78,7 @@
 					:disabled="!isAuth(['ROOT', 'AMECT:SELECT'])"
 					@click="reportHandle()"
 				>
-					查看报告
+					Report
 				</el-button>
 			</el-form-item>
 		</el-form>
@@ -100,49 +100,49 @@
 			/>
 			<el-table-column width="40px" prop="reason" header-align="center" align="center" type="expand">
 				<template #default="scope">
-					罚款原因：{{ scope.row.reason }}
+					Reason for fine：{{ scope.row.reason }}
 				</template>
 			</el-table-column>
-			<el-table-column type="index" header-align="center" align="center" width="100" label="序号">
+			<el-table-column type="index" header-align="center" align="center" width="100" label="No.">
 				<template #default="scope">
 					<span>{{ (pageIndex - 1) * pageSize + scope.$index + 1 }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="type" header-align="center" align="center" label="罚款类型" />
-			<el-table-column prop="name" header-align="center" align="center" label="当事人" />
-			<el-table-column prop="deptName" header-align="center" align="center" label="所属部门" />
-			<el-table-column header-align="center" align="center" label="罚款金额">
+			<el-table-column prop="type" header-align="center" align="center" label="Fine Type" />
+			<el-table-column prop="name" header-align="center" align="center" label="Name" />
+			<el-table-column prop="deptName" header-align="center" align="center" label="Department" />
+			<el-table-column header-align="center" align="center" label="Fine Value">
 				<template #default="scope">
-					<span>{{ scope.row.amount }}元</span>
+					<span>{{ scope.row.amount }}CNY</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="status" header-align="center" align="center" label="状态" />
-			<el-table-column prop="createTime" header-align="center" align="center" label="日期时间" />
-			<el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+			<el-table-column prop="status" header-align="center" align="center" label="Status" />
+			<el-table-column prop="createTime" header-align="center" align="center" label="createTime" />
+			<el-table-column fixed="right" header-align="center" align="center" width="150" label="Action">
 				<template #default="scope">
 					<el-button
 						type="text"
 						size="medium"
-						:disabled="!(isAuth(['ROOT', 'AMECT:UPDATE']) && scope.row.status != '已缴纳')"
+						:disabled="!(isAuth(['ROOT', 'AMECT:UPDATE']) && scope.row.status != 'Paid')"
 						@click="updateHandle(scope.row.id)"
 					>
-						修改
+						Modify
 					</el-button>
 					<el-button
 						type="text"
 						size="medium"
-						:disabled="!(isAuth(['ROOT', 'AMECT:DELETE']) && scope.row.status != '已缴纳')"
+						:disabled="!(isAuth(['ROOT', 'AMECT:DELETE']) && scope.row.status != 'Paid')"
 						@click="deleteHandle(scope.row.id)"
 					>
-						删除
+						Delete
 					</el-button>
 					<el-button
 						type="text"
 						size="medium"
-						:disabled="!(scope.row.mine == 'true' && scope.row.status == '未缴纳')"
+						:disabled="!(scope.row.mine == 'true' && scope.row.status == 'Not Paid')"
 						@click="payHandle(scope.row.id)"
 					>
-						交款
+						Pay
 					</el-button>
 				</template>
 			</el-table-column>
@@ -226,10 +226,10 @@ export default {
         let page = resp.page;
         for (let one of page.list) {
           if (one.status == 1) {
-            one.status = "未缴纳";
+            one.status = "Not Paid";
           }
           else if (one.status == 2) {
-            one.status = "已缴纳";
+            one.status = "Paid";
           }
           that.dataList = page.list;
           that.totalCount = page.totalCount;
@@ -277,7 +277,7 @@ export default {
       });
     },
     selectable: function(row, index) {
-      if(row.status != '已缴纳') {
+      if(row.status != 'Paid') {
         return true;
       }
       return false;
@@ -294,27 +294,27 @@ export default {
       });
       if(ids.length == 0) {
         that.$message({
-          message:'没有选中记录',
+          message:'no record selected',
           type:'warning',
           duration:1200
         });
       } else {
-        that.$confirm('确定要删除选中的记录?','提示',{
-          confirmButtonText:'确定',
-          cancelButtonText:'取消',
+        that.$confirm('Are you sure you want to delete the selected records?','Hint',{
+          confirmButtonText:'Confirm',
+          cancelButtonText:'Cancel',
           type:'warning'
         }).then(()=>{
           that.$http('amect/deleteAmectByIds','POST',{ ids:ids },true,function(resp){
             if (resp.rows > 0) {
               that.$message({
-                message:'未能删除记录',
+                message:'success',
                 type:'success',
                 duration:1200
               });
               that.loadDataList();
             } else {
               that.$message({
-                message:'未能删除记录',
+                message:'cant delete',
                 type:'warning',
                 duration:1200
               });

@@ -4,28 +4,28 @@
 			<el-form-item prop="name">
 				<el-input
 					v-model="dataForm.name"
-					placeholder="会议室名称"
+					placeholder="meeting room name"
 					size="medium"
 					class="input"
 					clearable="clearable"
 				/>
 			</el-form-item>
 			<el-form-item>
-				<el-select v-model="dataForm.canDelete" class="input" placeholder="条件" size="medium">
+				<el-select v-model="dataForm.canDelete" class="input" placeholder="Condition" size="medium">
 					<el-option label="全部" value="all" />
 					<el-option label="可删除" value="true" />
 					<el-option label="不可删除" value="false" />
 				</el-select>
 			</el-form-item>
 			<el-form-item>
-				<el-button size="medium" type="primary" @click="searchHandle()">查询</el-button>
+				<el-button size="medium" type="primary" @click="searchHandle()">Search</el-button>
 				<el-button
 					size="medium"
 					type="primary"
 					:disabled="!isAuth(['ROOT', 'MEETING_ROOM:INSERT'])"
 					@click="addHandle()"
 				>
-					新增
+					Add
 				</el-button>
 				<el-button
 					size="medium"
@@ -33,7 +33,7 @@
 					:disabled="!isAuth(['ROOT', 'MEETING_ROOM:DELETE'])"
 					@click="deleteHandle()"
 				>
-					批量删除
+					Multi-Delete
 				</el-button>
 			</el-form-item>
 		</el-form>
@@ -47,24 +47,24 @@
 			size="medium"
 		>
 			<el-table-column type="selection" header-align="center" align="center" width="50" />
-			<el-table-column type="index" header-align="center" align="center" width="100" label="序号">
+			<el-table-column type="index" header-align="center" align="center" width="100" label="No.">
 				<template #default="scope">
 					<span>{{ (pageIndex - 1) * pageSize + scope.$index + 1 }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="name" header-align="center" align="center" min-width="150" label="会议室名称" />
-			<el-table-column header-align="center" align="center" min-width="120" label="人数上限">
+			<el-table-column prop="name" header-align="center" align="center" min-width="150" label="MeetingRoom Name" />
+			<el-table-column header-align="center" align="center" min-width="120" label="People Limit">
 				<template #default="scope">
-					<span>{{ scope.row.max }}人</span>
+					<span>{{ scope.row.max }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column header-align="center" align="center" min-width="100" label="状态">
+			<el-table-column header-align="center" align="center" min-width="100" label="Status">
 				<template #default="scope">
-					<span>{{ scope.row.status == 1 ? '可使用' : '已停用' }}</span>
+					<span>{{ scope.row.status == 1 ? 'Usable' : 'Unusable' }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="desc" header-align="center" align="center" label="备注" min-width="400" />
-			<el-table-column header-align="center" align="center" width="150" label="操作">
+			<el-table-column prop="desc" header-align="center" align="center" label="Description" min-width="400" />
+			<el-table-column header-align="center" align="center" width="150" label="Action">
 				<template #default="scope">
 					<el-button
 						type="text"
@@ -72,7 +72,7 @@
 						:disabled="!isAuth(['ROOT', 'MEETING_ROOM:UPDATE']) || scope.row.id == 0"
 						@click="updateHandle(scope.row.id)"
 					>
-						修改
+						Modify
 					</el-button>
 					<el-button
 						type="text"
@@ -80,7 +80,7 @@
 						:disabled="!isAuth(['ROOT', 'MEETING_ROOM:DELETE']) || scope.row.id == 0"
 						@click="deleteHandle(scope.row.id)"
 					>
-						删除
+						Delete
 					</el-button>
 				</template>
 			</el-table-column>

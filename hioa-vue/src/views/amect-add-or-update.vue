@@ -1,26 +1,26 @@
 <template>
 	<el-dialog
-		:title="!dataForm.id ? '新增罚款记录' : '修改罚款记录'"
+		:title="!dataForm.id ? 'Add fine record' : 'Modify fine record'"
 		:close-on-click-modal="false"
 		v-model="visible"
 		width="692px"
 	>
 		<el-form :model="dataForm" ref="dataForm" :rules="dataRule" label-width="60px">
-			<el-form-item label="类型" prop="typeId">
-				<el-select v-model="dataForm.typeId" placeholder="罚款类型" size="medium" style="width:40%">
+			<el-form-item label="Type" prop="typeId">
+				<el-select v-model="dataForm.typeId" placeholder="FineType" size="medium" style="width:40%">
 					<el-option v-for="one in amectTypeList" :label="one.type" :value="one.id" />
 				</el-select>
-				<span class="desc">必须选择一个罚款类型，罚款金额可以自动生成</span>
+				<span class="desc">A penalty type must be selected, and the penalty amount can be automatically generated</span>
 			</el-form-item>
-			<el-form-item label="金额" prop="amount">
-				<el-input v-model="dataForm.amount" size="medium" style="width:40%" placeholder="罚款金额" clearable />
-				<span class="desc">元</span>
+			<el-form-item label="Amount" prop="amount">
+				<el-input v-model="dataForm.amount" size="medium" style="width:40%" placeholder="Fine Value" clearable />
+				<span class="desc">CNY</span>
 			</el-form-item>
-			<el-form-item label="原因" prop="reason">
+			<el-form-item label="reason" prop="reason">
 				<el-input
 					type="textarea"
 					:rows="2"
-					placeholder="罚款原因"
+					placeholder="Reason for fine"
 					v-model="dataForm.reason"
 					size="medium"
 					resize="none"
@@ -29,20 +29,20 @@
 					clearable="clearable"
 				/>
 			</el-form-item>
-			<el-form-item label="成员" prop="members" v-if="dataForm.id == 0">
+			<el-form-item label="members" prop="members" v-if="dataForm.id == 0">
 				<el-transfer
 					v-model="dataForm.members"
 					:data="users"
 					:titles="['员工', '当事人']"
 					filterable
-					filter-placeholder="请输入姓名"
+					filter-placeholder="Please type in name"
 				/>
 			</el-form-item>
 		</el-form>
 		<template #footer>
 			<span class="dialog-footer">
-				<el-button size="medium" @click="visible = false">取消</el-button>
-				<el-button type="primary" size="medium" @click="dataFormSubmit">确定</el-button>
+				<el-button size="medium" @click="visible = false">Cancel</el-button>
+				<el-button type="primary" size="medium" @click="dataFormSubmit">Confirm</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -63,18 +63,18 @@ export default {
 			amectTypeList: [],
 			users: [],
 			dataRule: {
-				typeId: [{ required: true, message: '罚款类型为必填' }],
+				typeId: [{ required: true, message: 'Penalty type is required' }],
 				amount: [
 					{
 						required: true,
 						pattern: '(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)',
-						message: '罚款金额格式错误'
+						message: 'Fine format error'
 					}
 				],
-				reason: [{ required: true, message: '罚款原因为必填' }],
+				reason: [{ required: true, message: 'Reason for penalty is required' }],
 				members: [
-					{ required: true, trigger: 'blur', message: '必须设置当事人' },
-					{ required: false, trigger: 'change', message: '必须设置当事人' }
+					{ required: true, trigger: 'blur', message: 'Fine Members must be set' },
+					{ required: false, trigger: 'change', message: 'Fine Members must be set' }
 				]
 			}
 		};
@@ -123,13 +123,13 @@ export default {
               that.visible = false;
               that.$emit('refreshDataList');
               that.$message({
-                message: '操作成功',
+                message: 'success',
                 type: 'success',
                 duration: 1200
               });
             } else {
               that.$message({
-                message: '操作失败',
+                message: 'error',
                 type: 'error',
                 duration: 1200
               });

@@ -4,16 +4,16 @@
 			<el-form-item prop="type">
 				<el-input
 					v-model="dataForm.type"
-					placeholder="类型名称"
+					placeholder="Type Name"
 					size="medium"
 					class="input"
 					clearable="clearable"
 				/>
 			</el-form-item>
 			<el-form-item>
-				<el-button size="medium" type="primary" @click="searchHandle()">查询</el-button>
-				<el-button size="medium" type="primary" @click="addHandle()">新增</el-button>
-				<el-button size="medium" type="danger" @click="deleteHandle()">批量删除</el-button>
+				<el-button size="medium" type="primary" @click="searchHandle()">Search</el-button>
+				<el-button size="medium" type="primary" @click="addHandle()">Add</el-button>
+				<el-button size="medium" type="danger" @click="deleteHandle()">Multi-Delete</el-button>
 			</el-form-item>
 		</el-form>
 		<el-table
@@ -32,37 +32,37 @@
 				align="center"
 				width="50"
 			/>
-			<el-table-column type="index" header-align="center" align="center" width="100" label="序号">
+			<el-table-column type="index" header-align="center" align="center" width="100" label="No.">
 				<template #default="scope">
 					<span>{{ (pageIndex - 1) * pageSize + scope.$index + 1 }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="type" header-align="center" align="center" label="罚款类型" />
-			<el-table-column header-align="center" align="center" label="罚款金额">
+			<el-table-column prop="type" header-align="center" align="center" label="Fine Type" />
+			<el-table-column header-align="center" align="center" label="Fine Value">
 				<template #default="scope">
-					<span>{{ scope.row.money }}元</span>
+					<span>{{ scope.row.money }}CNY</span>
 				</template>
 			</el-table-column>
-			<el-table-column header-align="center" align="center" label="系统自带">
+			<el-table-column header-align="center" align="center" label="Integrated?">
 				<template #default="scope">
-					<span>{{ scope.row.systemic ? '是' : '否' }}</span>
+					<span>{{ scope.row.systemic ? 'Yes' : 'No' }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column header-align="center" align="center" label="未缴罚款数量">
+			<el-table-column header-align="center" align="center" label="Number of outstanding fines">
 				<template #default="scope">
-					<span>{{ scope.row.notPay == 0 ? '--' : scope.row.notPay + '个' }}</span>
+					<span>{{ scope.row.notPay == 0 ? '--' : scope.row.notPay + '' }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+			<el-table-column fixed="right" header-align="center" align="center" width="150" label="Action">
 				<template #default="scope">
-					<el-button type="text" size="medium" @click="updateHandle(scope.row.id)">修改</el-button>
+					<el-button type="text" size="medium" @click="updateHandle(scope.row.id)">Modify</el-button>
 					<el-button
 						type="text"
 						size="medium"
 						:disabled="scope.row.canDelete == 'false'"
 						@click="deleteHandle(scope.row.id)"
 					>
-						删除
+						Delete
 					</el-button>
 				</template>
 			</el-table-column>
@@ -179,21 +179,21 @@ export default {
           });
       if (ids.length == 0) {
         that.$message({
-          message:'没有选中记录',
+          message:'no record selected',
           type:'warning',
           duration:1200
         });
       } else {
-        that.$confirm(`确定要删除选中的记录？`,'提示', {
-          confirmButtonText:'确定',
-          cancelButtonText:'取消',
+        that.$confirm(`Are you sure you want to delete the selected records？`,'hint', {
+          confirmButtonText:'Confirm',
+          cancelButtonText:'Cancel',
           type:'warning'
         }).then(() => {
           //发起ajax请求
           that.$http(`amect_type/deleteAmectTypeByIds`, 'POST',{ids:ids}, true, function (resp) {
             if (resp.rows > 0) {
               that.$message({
-                message:'操作成功',
+                message:'success',
                 type:'success',
                 duration:1200,
                 onClose:() => {
@@ -202,7 +202,7 @@ export default {
               });
             } else {
               that.$message({
-                message: '未能删除记录',
+                message: 'cant delete',
                 type: 'warning',
                 duration: 1200
               });

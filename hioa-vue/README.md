@@ -1,2 +1,0 @@
-# hioa-vue
-vue frontend 

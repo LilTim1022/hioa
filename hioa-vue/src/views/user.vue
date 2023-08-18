@@ -4,20 +4,20 @@
 			<el-form-item prop="name">
 				<el-input
 					v-model="dataForm.name"
-					placeholder="姓名"
+					placeholder="Name"
 					size="medium"
 					class="input"
 					clearable="clearable"
 				/>
 			</el-form-item>
 			<el-form-item>
-				<el-select v-model="dataForm.sex" class="input" placeholder="性别" size="medium" clearable="clearable">
-					<el-option label="男" value="男" />
-					<el-option label="女" value="女" />
+				<el-select v-model="dataForm.sex" class="input" placeholder="Gender" size="medium" clearable="clearable">
+					<el-option label="Male" value="男" />
+					<el-option label="Female" value="女" />
 				</el-select>
 			</el-form-item>
 			<el-form-item>
-				<el-select v-model="dataForm.role" class="input" placeholder="角色" size="medium" clearable="clearable">
+				<el-select v-model="dataForm.role" class="input" placeholder="Role" size="medium" clearable="clearable">
 					<el-option v-for="one in roleList" :label="one.roleName" :value="one.roleName" />
 				</el-select>
 			</el-form-item>
@@ -25,7 +25,7 @@
 				<el-select
 					v-model="dataForm.deptId"
 					class="input"
-					placeholder="部门"
+					placeholder="Department"
 					size="medium"
 					clearable="clearable"
 				>
@@ -36,23 +36,23 @@
 				<el-select
 					v-model="dataForm.status"
 					class="input"
-					placeholder="状态"
+					placeholder="Status"
 					size="medium"
 					clearable="clearable"
 				>
-					<el-option label="在职" value="1" />
-					<el-option label="离职" value="2" />
+					<el-option label="working" value="1" />
+					<el-option label="left" value="2" />
 				</el-select>
 			</el-form-item>
 			<el-form-item>
-				<el-button size="medium" type="primary" @click="searchHandle()">查询</el-button>
+				<el-button size="medium" type="primary" @click="searchHandle()">Search</el-button>
 				<el-button
 					size="medium"
 					type="primary"
 					:disabled="!isAuth(['ROOT', 'USER:INSERT'])"
 					@click="addHandle()"
 				>
-					新增
+					Add
 				</el-button>
 				<el-button
 					size="medium"
@@ -60,7 +60,7 @@
 					:disabled="!isAuth(['ROOT', 'USER:DELETE'])"
 					@click="deleteHandle()"
 				>
-					批量删除
+					Multi-Delete
 				</el-button>
 			</el-form-item>
 		</el-form>
@@ -74,34 +74,34 @@
 			size="medium"
 		>
 			<el-table-column type="selection" header-align="center" align="center" width="50"/>
-			<el-table-column type="index" header-align="center" align="center" width="100" label="序号">
+			<el-table-column type="index" header-align="center" align="center" width="100" label="No.">
 				<template #default="scope">
 					<span>{{ (pageIndex - 1) * pageSize + scope.$index + 1 }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="name" header-align="center" align="center" min-width="100" label="姓名" />
-			<el-table-column prop="sex" header-align="center" align="center" min-width="60" label="性别" />
-			<el-table-column prop="tel" header-align="center" align="center" min-width="130" label="电话" />
+			<el-table-column prop="name" header-align="center" align="center" min-width="100" label="Name" />
+			<el-table-column prop="sex" header-align="center" align="center" min-width="60" label="Gender" />
+			<el-table-column prop="tel" header-align="center" align="center" min-width="130" label="Tel" />
 			<el-table-column
 				prop="email"
 				header-align="center"
 				align="center"
 				min-width="240"
-				label="邮箱"
+				label="Email"
 				:show-overflow-tooltip="true"
 			/>
-			<el-table-column prop="hiredate" header-align="center" align="center" min-width="130" label="入职日期" />
+			<el-table-column prop="hiredate" header-align="center" align="center" min-width="130" label="Entry date" />
 			<el-table-column
 				prop="roles"
 				header-align="center"
 				align="center"
 				min-width="150"
-				label="角色"
+				label="Role"
 				:show-overflow-tooltip="true"
 			/>
-			<el-table-column prop="dept" header-align="center" align="center" min-width="120" label="部门" />
-			<el-table-column prop="status" header-align="center" align="center" min-width="100" label="状态" />
-			<el-table-column header-align="center" align="center" width="150" label="操作">
+			<el-table-column prop="dept" header-align="center" align="center" min-width="120" label="Dept" />
+			<el-table-column prop="status" header-align="center" align="center" min-width="100" label="Status" />
+			<el-table-column header-align="center" align="center" width="150" label="Action">
 				<template #default="scope">
 					<el-button
 						type="text"
@@ -109,7 +109,7 @@
 						v-if="isAuth(['ROOT', 'USER:UPDATE'])"
 						@click="updateHandle(scope.row.id)"
 					>
-						修改
+						Modify
 					</el-button>
 					<el-button
 						type="text"
@@ -118,7 +118,7 @@
 						:disabled="scope.row.status == '离职' || scope.row.root"
 						@click="dimissHandle(scope.row.id)"
 					>
-						离职
+						Sign Out
 					</el-button>
 					<el-button
 						type="text"
@@ -127,7 +127,7 @@
 						v-if="isAuth(['ROOT', 'USER:DELETE'])"
 						@click="deleteHandle(scope.row.id)"
 					>
-						删除
+						Delete
 					</el-button>
 				</template>
 			</el-table-column>
@@ -199,9 +199,9 @@ export default {
 		        let list = page.list;
 		        for (let one of list) {
 		            if (one.status == 1) {
-		                one.status = '在职';
+		                one.status = 'Working';
 		            } else if (one.status == 2) {
-		                one.status = '离职';
+		                one.status = 'Left';
 		            }
 		        }
 		        that.dataList = list;
@@ -275,27 +275,27 @@ export default {
 		          });
 		    if (ids.length == 0) {
 		        that.$message({
-		            message: '没有选中记录',
+		            message: 'no record selected',
 		            type: 'warning',
 		            duration: 1200
 		        });
 		    } else {
-		        that.$confirm(`确定要删除选中的记录？`, '提示', {
-		            confirmButtonText: '确定',
-		            cancelButtonText: '取消',
+		        that.$confirm(`Are you sure you want to delete the selected records？`, 'Tips', {
+		            confirmButtonText: 'Confirm',
+		            cancelButtonText: 'Cancel',
 		            type: 'warning'
 		        }).then(() => {
 		            that.$http('user/deleteUserByIds', 'POST', { ids: ids }, true, function(resp) {
 		                if (resp.rows > 0) {
 		                    that.$message({
-		                        message: '操作成功',
+		                        message: 'success',
 		                        type: 'success',
 		                        duration: 1200
 		                    });
 		                    that.loadDataList();
 		                } else {
 		                    that.$message({
-		                        message: '未能删除记录',
+		                        message: 'warning',
 		                        type: 'warning',
 		                        duration: 1200
 		                    });

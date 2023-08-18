@@ -1,20 +1,20 @@
 <template>
-	<el-dialog title="提示" v-model="visible" width="25%">
+	<el-dialog title="Tips" v-model="visible" width="25%">
 		<el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px">
-			<el-form-item label="原密码" prop="password">
+			<el-form-item label="Original Password" prop="password">
 				<el-input type="password" v-model="dataForm.password" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="新密码" prop="newPassword">
+			<el-form-item label="New Password" prop="newPassword">
 				<el-input type="password" v-model="dataForm.newPassword" size="medium" clearable />
 			</el-form-item>
-			<el-form-item label="确认密码" prop="confirmPassword">
+			<el-form-item label="Confirm New Password" prop="confirmPassword">
 				<el-input type="password" v-model="dataForm.confirmPassword" size="medium" clearable />
 			</el-form-item>
 		</el-form>
 		<template #footer>
 			<span class="dialog-footer">
-				<el-button size="medium" @click="visible = false">取消</el-button>
-				<el-button type="primary" size="medium" @click="dataFormSubmit">确定</el-button>
+				<el-button size="medium" @click="visible = false">Cancel</el-button>
+				<el-button type="primary" size="medium" @click="dataFormSubmit">Confirm</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -25,7 +25,7 @@ export default {
 	data() {
 		const validateConfirmPassword = (rule, value, callback) => {
 			if (value != this.dataForm.newPassword) {
-				callback(new Error('两次输入的密码不一致'));
+				callback(new Error('The two entered passwords do not match'));
 			} else {
 				callback();
 			}
@@ -39,10 +39,10 @@ export default {
 				confirmPassword: ''
 			},
 			dataRule: {
-				password: [{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: '密码格式错误' }],
-				newPassword: [{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: '密码格式错误' }],
+				password: [{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: 'wrong password format' }],
+				newPassword: [{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: 'wrong password format' }],
 				confirmPassword: [
-					{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: '密码格式错误' },
+					{ required: true, pattern: '^[a-zA-Z0-9]{6,20}$', message: 'wrong password format' },
 					{ validator: validateConfirmPassword, trigger: 'blur' }
 				]
 			}
@@ -73,7 +73,7 @@ export default {
 		                // rows=1时证明修改了记录成功（由swagger上次后端测试看出），停留时间1.2s
 						if (resp.rows == 1) {
 		                    this.$message({
-		                        message: '密码修改成功',
+		                        message: 'success',
 		                        type: 'success',
 		                        duration: 1200,
 		                    });
@@ -81,7 +81,7 @@ export default {
 		                    this.visible = false;
 		                } else {
 		                    this.$message({
-		                        message: '密码修改失败',
+		                        message: 'error',
 		                        type: 'error',
 		                        duration: 1200,
 		                    });

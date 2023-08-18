@@ -1,14 +1,14 @@
 <template>
-	<el-dialog title="线上会议申请" :close-on-click-modal="false" v-model="visible" width="692px">
+	<el-dialog title="Application for Online Meeting" :close-on-click-modal="false" v-model="visible" width="692px">
 		<el-form :model="dataForm" ref="dataForm" :rules="dataRule" label-width="60px">
-			<el-form-item label="主题" prop="title">
+			<el-form-item label="Theme" prop="title">
 				<el-input v-model="dataForm.title" size="medium" style="width:100%" clearable="clearable" />
 			</el-form-item>
-			<el-form-item label="内容" prop="desc">
+			<el-form-item label="Description" prop="desc">
 				<el-input
 					type="textarea"
 					:rows="2"
-					placeholder="请输入内容"
+					placeholder="Please type in description"
 					v-model="dataForm.desc"
 					size="medium"
 					resize="none"
@@ -16,27 +16,27 @@
 					clearable="clearable"
 				/>
 			</el-form-item>
-			<el-form-item label="日期" prop="date">
+			<el-form-item label="Date" prop="date">
 				<el-date-picker
 					v-model="dataForm.date"
 					type="date"
-					placeholder="选择日期"
+					placeholder="Choose Date"
 					style="width:34.5%"
 					size="medium"
 					:disabledDate="disabledDate"
 					clearable="clearable"
 				></el-date-picker>
-				<span class="note">会议日期只能是当前或者未来的日期，不能是以往的日期</span>
+				<span class="note">Date could only be in the future</span>
 			</el-form-item>
-			<el-form-item label="时间">
+			<el-form-item label="Time">
 				<el-col :span="11">
 					<el-form-item prop="start" class="inner-item">
 						<el-time-select
-							placeholder="起始时间"
+							placeholder="Start Time"
 							v-model="dataForm.start"
-							start="08:30"
-							step="00:30"
-							end="18:30"
+							start="00:00"
+							step="00:10"
+							end="24:00"
 							size="medium"
 							style="width:96%"
 							clearable="clearable"
@@ -47,11 +47,11 @@
 				<el-col :span="11" prop="end">
 					<el-form-item prop="end" class="inner-item">
 						<el-time-select
-							placeholder="结束时间"
+							placeholder="End Time"
 							v-model="dataForm.end"
-							start="08:30"
-							step="00:30"
-							end="18:30"
+							start="00:00"
+							step="00:10"
+							end="24:00"
 							size="medium"
 							style="width:96%"
 							clearable="clearable"
@@ -59,22 +59,22 @@
 						></el-time-select>
 					</el-form-item>
 				</el-col>
-				<span class="note">注意会议时间范围</span>
+				<span class="note">Remind the time scope</span>
 			</el-form-item>
-			<el-form-item label="成员" prop="members">
+			<el-form-item label="Attender" prop="members">
 				<el-transfer
 					v-model="dataForm.members"
 					:data="users"
 					:titles="['员工', '参会人']"
 					filterable
-					filter-placeholder="请输入姓名"
+					filter-placeholder="Please fill in names"
 				/>
 			</el-form-item>
 		</el-form>
 		<template #footer>
 			<span class="dialog-footer">
-				<el-button size="medium" @click="visible = false">取消</el-button>
-				<el-button type="primary" size="medium" @click="dataFormSubmit">确定</el-button>
+				<el-button size="medium" @click="visible = false">Cancel</el-button>
+				<el-button type="primary" size="medium" @click="dataFormSubmit">Confirm</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -99,14 +99,14 @@ export default {
 			},
 			users: [],
 			dataRule: {
-				title: [{ required: true, pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]{2,30}$', message: '会议主题格式错误' }],
-				desc: [{ required: true, message: '会议内容为必填' }],
-				date: [{ required: true, message: '日期为必填' }],
-				start: [{ required: true, message: '起始时间为必填' }],
-				end: [{ required: true, message: '结束时间为必填' }],
+				title: [{ required: true, pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]{2,30}$', message: 'Meeting subject format error' }],
+				desc: [{ required: true, message: 'Meeting content is required' }],
+				date: [{ required: true, message: 'date is required' }],
+				start: [{ required: true, message: 'Start time is required' }],
+				end: [{ required: true, message: 'End time is required' }],
 				members: [
-					{ required: true, trigger: 'blur', message: '必须设置参会人' },
-					{ required: false, trigger: 'change', message: '必须设置参会人' }
+					{ required: true, trigger: 'blur', message: 'Participants must be set' },
+					{ required: false, trigger: 'change', message: 'Participants must be set' }
 				]
 			}
 		};
@@ -143,14 +143,14 @@ export default {
 		        },
 		        users: [],
 		        dataRule: {
-		            title: [{ required: true, pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]{2,30}$', message: '会议主题格式错误' }],
-		            desc: [{ required: true, message: '会议内容为必填' }],
-		            date: [{ required: true, message: '日期为必填' }],
-		            start: [{ required: true, message: '起始时间为必填' }],
-		            end: [{ required: true, message: '结束时间为必填' }],
+		            title: [{ required: true, pattern: '^[a-zA-Z0-9\u4e00-\u9fa5]{2,30}$', message: 'Meeting subject format error' }],
+		            desc: [{ required: true, message: 'Meeting content is required' }],
+		            date: [{ required: true, message: 'date is required' }],
+		            start: [{ required: true, message: 'Start time is required' }],
+		            end: [{ required: true, message: 'End time is required' }],
 		            members: [
-		                { required: true, trigger: 'blur', message: '必须设置参会人' },
-		                { required: false, trigger: 'change', message: '必须设置参会人' }
+		                { required: true, trigger: 'blur', message: 'Participants must be set' },
+		                { required: false, trigger: 'change', message: 'Participants must be set' }
 		            ]
 		        }
 		    };
