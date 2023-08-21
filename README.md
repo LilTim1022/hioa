@@ -61,3 +61,12 @@ This guide assume you have the following already installed.
    ```
 
 6. browse http://localhost:3000/hioa-vue/ at your browser
+
+7. If you need to test the WeChat fine payment unit, please contact me for the certificate file of WeChat payment. Otherwise it will not work.
+
+### Deployed Product
+
+You can check http://43.136.44.60/hioa-vue/#/ for the deployed version of this project.
+
+The initial username of superuser is admin and initial password is abc123456.
+
